@@ -1,13 +1,35 @@
-const express = require('express'); // Express 라이브러리 import
-const app = express(); // Express 앱 인스턴스 생성
+require('dotenv').config(); 
+const express = require('express');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const connectDB = require("./config/db")
+const signupRouter = require('./routes/signup');  // routes/signup 불러오기
+const loginRouter = require('./routes/login');  
+const cors = require('cors');
 
-// 기본 라우팅 설정
+const app = express(); 
+connectDB();
+
+
+//Mongo 연결
+
+//미들웨어, 라우터 설정 추가
+app.use('/signup', signupRouter);
+app.use('/login', loginRouter);
+
+/// 미들웨어 ㅅㅈ
+app.use(cors());
+app.use(express.json());
+
+
+// 경로 응답
 app.get('/', (req, res) => {
-  res.send('Hello, World!'); // '/' 경로에 대한 응답
+  res.send("connected!!!!!!!");
 });
 
-// 서버 시작 설정
-const port = 3000; // 서버 포트 지정
-app.listen(port, () => {
-  console.log(`서버가 포트 ${port}에서 실행 중입니다.`); // 서버가 실행 중임을 확인
-});
+
+// 서버 실행
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, ()=>{
+  console.log('server running on' + PORT)
+})
