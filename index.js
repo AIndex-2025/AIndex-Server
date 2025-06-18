@@ -1,10 +1,9 @@
 require('dotenv').config(); 
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const connectDB = require("./config/db")
 const signupRouter = require('./routes/signup');  // routes/signup 불러오기
-const loginRouter = require('./routes/login');  
+const loginRouter = require('./routes/login');
+const aiRouter = require('./routes/ai');  
 const cors = require('cors');
 
 const app = express(); 
@@ -16,6 +15,7 @@ connectDB();
 //미들웨어, 라우터 설정 추가
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
+app.use('/ai', aiRouter);
 
 /// 미들웨어 ㅅㅈ
 app.use(cors());
